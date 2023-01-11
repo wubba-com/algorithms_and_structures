@@ -19,7 +19,7 @@ type (
 )
 
 // Add Добавляет элемент в дерево на корректную позицию.
-// Сложность: O(log n) в среднем; O(n) в худшем случае.
+// Сложность: O(log n) в среднем или O(n) в худшем случае.
 func (t *BinaryTree) Add(value int) error {
 	if t == nil {
 		return errors.New("tree == nil")

@@ -20,6 +20,7 @@ func (l *LinkedList) Last() *Node {
 	return l.last
 }
 
+// PopFirst Удаление первого элемента из списка. Оценка сложности: O(1)
 func (l *LinkedList) PopFirst() *Node {
 	if l.first != nil {
 		node := l.first
@@ -39,6 +40,7 @@ func (l *LinkedList) PopFirst() *Node {
 	return nil
 }
 
+// PopLast Удаление последнего элемента из списка. Оценка сложности: O(1)
 func (l *LinkedList) PopLast() *Node {
 	if l.last != nil {
 		n := l.last
@@ -77,7 +79,7 @@ func (l *LinkedList) AddFirst(value int) {
 	l.first = n
 }
 
-// AddLast обращаемся сразу к последнему элементу - сложность O(1)
+// AddLast добавление в конец списка. Оценка сложности: O(1)
 func (l *LinkedList) AddLast(value int) {
 	n := &Node{val: value}
 
@@ -95,6 +97,7 @@ func (l *LinkedList) AddLast(value int) {
 }
 
 // Find поиск по k в списке. Может передать отрицательное значение, тогда элементы будут браться с конца - сложность O(n)
+// Если использовать до половины с разных сторон, то оценка сложности O(n/2)
 func (l *LinkedList) Find(k int) *Node {
 	if k < 0 {
 		k = -k
@@ -104,7 +107,7 @@ func (l *LinkedList) Find(k int) *Node {
 	return l.find(k)
 }
 
-// Метод find - поиск сначала списка
+// Метод find - поиск сначала списка Оценка сложности: O(n)
 func (l *LinkedList) find(k int) *Node {
 	var i int
 	n := l.first
@@ -119,7 +122,7 @@ func (l *LinkedList) find(k int) *Node {
 	return n
 }
 
-// Метод findReverse - поиск с конца списка
+// Метод findReverse - поиск с конца списка. Оценка сложности: O(n)
 func (l *LinkedList) findReverse(k int) *Node {
 	var i = 1
 	n := l.last
@@ -149,7 +152,7 @@ func AddFirst(node *Node, item *Node) {
 
 // -------------- Вспомогательные методы для просмотра связей ---------------
 
-// Print - сверху вниз O(N)
+// Print - сверху вниз O(n)
 func (l *LinkedList) Print() {
 	n := l.first
 
