@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	ll "github.com/wubba-com/algorithms_and_structures/structure/linked_list"
 	"testing"
-	ll "testing/structure/linked_list"
 )
 
 func TestStack_ArrayPeek(t *testing.T) {

@@ -122,6 +122,7 @@ func Merge(left, right []int) []int {
 // Память 		O(1) 				O(1) 		O(1)
 
 // Sort Быстрая сортировка
+// Данная реализация взята из книги "Грокаем Алгоритмы"
 func Sort(input []int) []int {
 	if len(input) < 2 {
 		return input
