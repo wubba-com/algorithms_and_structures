@@ -8,7 +8,7 @@ import (
 // errors
 
 var (
-	EmptyList = errors.New("list is empty")
+	EmptyList = errors.New("queue is empty")
 )
 
 // Очереди не дают доступа к произвольному элементу, но,
@@ -24,7 +24,12 @@ func New() *Queue {
 }
 
 type Queue struct {
+	len  int
 	list *dll.LinkedList
+}
+
+func (q *Queue) Len() int {
+	return q.len
 }
 
 // PeekShift
@@ -44,14 +49,22 @@ func (q *Queue) PeekPop() *dll.Node {
 // Unshift
 // Поведение: Добавляет элемент в начало очереди.
 // Сложность: O(1)
-func (q *Queue) Unshift(item int) {
+func (q *Queue) Unshift(item interface{}) {
+	defer func() {
+		q.len += 1
+	}()
+
 	q.list.AddFirst(item)
 }
 
 // Push
 // Поведение: Добавляет элемент в конец очереди.
 // Сложность: O(1)
-func (q *Queue) Push(item int) {
+func (q *Queue) Push(item interface{}) {
+	defer func() {
+		q.len += 1
+	}()
+
 	q.list.AddLast(item)
 }
 
@@ -60,6 +73,9 @@ func (q *Queue) Push(item int) {
 // Сложность: O(1).
 func (q *Queue) Shift() (*dll.Node, error) {
 	if first := q.list.PopFirst(); first != nil {
+		defer func() {
+			q.len -= 1
+		}()
 		return first, nil
 	}
 	return nil, EmptyList
@@ -70,6 +86,10 @@ func (q *Queue) Shift() (*dll.Node, error) {
 // Сложность: O(1).
 func (q *Queue) Pop() (*dll.Node, error) {
 	if last := q.list.PopLast(); last != nil {
+		defer func() {
+			q.len -= 1
+		}()
+
 		return last, nil
 	}
 

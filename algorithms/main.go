@@ -13,6 +13,13 @@ func main() {
 	i := sorting.BinarySearch(sl, 56)
 	fmt.Println(sl[i] == 56)
 
-	fmt.Println(sorting.Fib(0))
-	fmt.Println(sorting.FibLine(0))
+	fmt.Println(sorting.Fib(4))
+	fmt.Println(sorting.FibLine(4))
+
+	sl = []int{2, 0, 4, 0, 6, 0, 3, 0, 1, 0, 1, 0, 0}
+	sorting.MoveElementToEnd(sl, 0)
+	fmt.Println(sl)
+
+	sorting.SortSelected(sl)
+	fmt.Println(sl)
 }

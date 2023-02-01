@@ -63,7 +63,7 @@ func (l *LinkedList) PopLast() *Node {
 }
 
 // AddFirst - в методе обращаемся сразу первому элементу - сложность O(1), что гораздо быстрее 100000 элементов - 3.209ms
-func (l *LinkedList) AddFirst(value int) {
+func (l *LinkedList) AddFirst(value interface{}) {
 	n := &Node{val: value}
 
 	if l.first == nil {
@@ -80,7 +80,7 @@ func (l *LinkedList) AddFirst(value int) {
 }
 
 // AddLast добавление в конец списка. Оценка сложности: O(1)
-func (l *LinkedList) AddLast(value int) {
+func (l *LinkedList) AddLast(value interface{}) {
 	n := &Node{val: value}
 
 	if l.first == nil {

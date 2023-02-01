@@ -3,7 +3,7 @@ package dll
 type Node struct {
 	prev *Node
 	next *Node
-	val  int
+	val  interface{}
 }
 
 func (n *Node) setNext(next *Node) {
@@ -22,6 +22,6 @@ func (n *Node) Next() *Node {
 	return n.next
 }
 
-func (n *Node) Value() int {
+func (n *Node) Value() interface{} {
 	return n.val
 }

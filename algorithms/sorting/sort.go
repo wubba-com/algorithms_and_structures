@@ -23,14 +23,22 @@ func FibLine(n int) int {
 		return 1
 	}
 
-	x, y, abs := 1, 1, 0
+	x, y := 1, 1
 	for i := 2; i < n; i++ {
-		abs = x + y
-		x = y
-		y = abs
+		x, y = y, x+y
 	}
 
-	return abs
+	return y
+}
+
+func Includes(sl []int, include int) bool {
+	for _, v := range sl {
+		if v == include {
+			return true
+		}
+	}
+
+	return false
 }
 
 // BinarySearch - O(log n)
@@ -44,7 +52,6 @@ func BinarySearch(sl []int, value int) int {
 
 	for start <= end {
 		mid := (start + end) / 2
-
 		switch {
 		case sl[mid] == value:
 			return mid
@@ -56,6 +63,23 @@ func BinarySearch(sl []int, value int) int {
 	}
 
 	return -1
+}
+
+func SortSelected(sl []int) {
+	if len(sl) < 2 {
+		return
+	}
+
+	for i := 0; i < len(sl); i++ {
+		indexMin := i
+		for j := i + 1; j < len(sl); j++ {
+			if sl[j] < sl[indexMin] {
+				indexMin = j
+			}
+		}
+		//fmt.Println(sl[i], sl[indexMin])
+		sl[i], sl[indexMin] = sl[indexMin], sl[i]
+	}
 }
 
 // SortInsert Сортировка вставками
@@ -169,3 +193,24 @@ func quickSort(arr []int, low, high int) []int {
 	}
 	return arr
 }
+
+// MoveElementToEnd 1. Реализуйте алгоритм, который принимает массив и перемещает все нули в конец, сохраняя порядок остальных элементов.
+func MoveElementToEnd(sl []int, num int) {
+	if len(sl) < 2 {
+		return
+	}
+	nums := make([]int, 0)
+
+	for i, v := range sl {
+		if v == num {
+			if i+1 <= len(sl)-1 {
+				nums = append(nums, v)
+				copy(sl[i:], sl[i+1:])
+				sl = sl[:len(sl)-1]
+			}
+		}
+	}
+	sl = append(sl, nums...)
+}
+
+// Посчитайте сумму ряда н-го xпирамида нечетных числе (начало с 1)
