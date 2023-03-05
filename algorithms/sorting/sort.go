@@ -65,20 +65,22 @@ func BinarySearch(sl []int, value int) int {
 	return -1
 }
 
+// SortSelected Сложность O(n**2)
 func SortSelected(sl []int) {
 	if len(sl) < 2 {
 		return
 	}
 
 	for i := 0; i < len(sl); i++ {
-		indexMin := i
+		min := i
 		for j := i + 1; j < len(sl); j++ {
-			if sl[j] < sl[indexMin] {
-				indexMin = j
+			if sl[j] < sl[min] {
+				min = j
 			}
 		}
-		//fmt.Println(sl[i], sl[indexMin])
-		sl[i], sl[indexMin] = sl[indexMin], sl[i]
+		if sl[min] != sl[i] {
+			sl[i], sl[min] = sl[min], sl[i]
+		}
 	}
 }
 

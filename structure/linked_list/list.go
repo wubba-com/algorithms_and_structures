@@ -112,6 +112,25 @@ func (l *LinkedList) Add(item int32) bool {
 	return true
 }
 
+func (l *LinkedList) reverse() *Node {
+	node := l.first
+	var (
+		current = node
+		prev    *Node
+		next    *Node
+	)
+
+	for current != nil {
+		next = current
+		current.next = prev
+		prev = current
+		current = next
+	}
+	node = prev
+
+	return node
+}
+
 // Find Алгоритм для поиска в односвязном списке k-го элемента с конца - сложность O(n)
 func (l *LinkedList) Find(k int) *Node {
 	if k <= 0 {
