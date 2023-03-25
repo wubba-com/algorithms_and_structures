@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/wubba-com/algorithms_and_structures/structure/graph"
 	"github.com/wubba-com/algorithms_and_structures/structure/heap"
 	ll "github.com/wubba-com/algorithms_and_structures/structure/linked_list"
 	"github.com/wubba-com/algorithms_and_structures/structure/queue"
@@ -105,55 +104,6 @@ func main() {
 	fmt.Println()
 	t.Delete(3)
 	fmt.Println(t.Find(3))
-
-	// граф              (7)             (1)
-	//         B (1) --------- F (5) ---------- G (6)
-	//       /               /    |  \
-	//     /  (2)          / (2)  |   \ (4)
-	//   /               /        |    \
-	// A (0)           D (3)      | (1)  S (7)
-	//  \            /            |    /
-	//   \ (1)     / (5)          |  / (6)
-	//    \      /     (2)        |/
-	//     C (2) ------------- E (4)
-	// матрица смежности графа:
-
-	//   0 1 2 3 4 5 6
-	// 0 x 1 1 x x x x
-	// 1 x x x x 1 x x
-	// 2 x x x 1 x 1 x
-	// 3 x x x x 1 x x
-	// 4 x x x x x x 1
-	// 5 x x x x x x 1
-	// 6 x x x x x x x
-	g := graph.New()
-	idA := g.AddNode()
-	idB := g.AddNode()
-	idC := g.AddNode()
-	idD := g.AddNode()
-	idE := g.AddNode()
-	idF := g.AddNode()
-	idG := g.AddNode()
-	idS := g.AddNode()
-
-	err = g.AddEdge(idA, idB, 2)
-	err = g.AddEdge(idB, idA, 2)
-	err = g.AddEdge(idA, idC, 1)
-	err = g.AddEdge(idB, idF, 7)
-	err = g.AddEdge(idC, idD, 5)
-	err = g.AddEdge(idC, idE, 2)
-	err = g.AddEdge(idD, idF, 2)
-	err = g.AddEdge(idE, idF, 1)
-	err = g.AddEdge(idF, idG, 1)
-	err = g.AddEdge(idF, idS, 4)
-	err = g.AddEdge(idE, idS, 6)
-
-	exist := g.BreadthSearch(idA, idS)
-	fmt.Println("found:", exist)
-
-	costs, path := g.Short(idB, idS)
-	fmt.Println("costs:", costs)
-	fmt.Println("path:", path)
 
 	h := heap.NewMax()
 	h.Push(10, nil)
