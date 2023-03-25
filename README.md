@@ -1,7 +1,7 @@
 ######  Реализация базовых структур данных и алгоритмов на Go :rocket:
 
 ### Cтруктуры данных :open_book:: 
-stack, queue, linked list, double linked list, binary tree 
+Stack, Queue, Linked list, Double linked list, Binary tree, Heap
 
 ### Aлгоритмы :blue_book:: 
 binary search, quick sort, sort insert . 
