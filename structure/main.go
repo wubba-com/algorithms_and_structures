@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/wubba-com/algorithms_and_structures/structure/graph"
+	"github.com/wubba-com/algorithms_and_structures/structure/heap"
 	ll "github.com/wubba-com/algorithms_and_structures/structure/linked_list"
 	"github.com/wubba-com/algorithms_and_structures/structure/queue"
 	"github.com/wubba-com/algorithms_and_structures/structure/stack"
@@ -12,37 +13,55 @@ import (
 func main() {
 	// -------- односвязный список + стек ---------
 	var list = ll.New()
-	list.Add(2)
-	list.Add(3)
-	list.Add(4)
-	list.Add(5)
+	for i := 1; i <= 5; i++ {
+		list.Add(i)
+	}
 
 	// last element
 	fmt.Println(list.Find(1))
 
-	s := stack.New()
-	s.LLPush(1)
+	s := stack.NewBasicLinkedList()
+	s.Push(stack.Value{Value: 1})
 
-	lastNodeForRead := s.LLPeek()                // get last element
-	lastNodeDeleteAndReturning, err := s.LLPop() // delete and get last element
+	lastNodeForRead, ok := s.Peek() // get last element
+	if ok {
+		// element is
+	}
+	lastNodeDeleteAndReturning, err := s.Pop() // delete and get last element
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println(lastNodeDeleteAndReturning.Value() == lastNodeForRead.Value())
-	stack.PrintStack(s)
+	fmt.Println(lastNodeDeleteAndReturning.Value.(int) == lastNodeForRead.Value.(int))
 
+	for i := 1; i < 10; i++ {
+		s.Push(stack.Value{Value: i})
+	}
+	s.Print()
+	_, _ = s.Pop()
+	s.Print()
+
+	for s.Next() {
+		var v *stack.Value
+		v, err = s.Pop()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Printf("%v ", v.Value)
+	}
+	fmt.Println()
 	// -------- двусвязный список + очередь ---------
 	q := queue.New()
 
 	for i := 1; i < 3; i++ {
-		q.Unshift(i)
-		q.Push(i * 10)
+		q.PushFront(i)
+		q.PushBack(i * 10)
 	}
 	for i := 3; i < 5; i++ {
-		q.Unshift(i)
-		q.Push(i * 10)
+		q.PushFront(i)
+		q.PushBack(i * 10)
 	}
 	// вывести все элементы
 	queue.Print(q)
@@ -136,6 +155,18 @@ func main() {
 	fmt.Println("costs:", costs)
 	fmt.Println("path:", path)
 
+	h := heap.NewMax()
+	h.Push(10, nil)
+	h.Push(20, nil)
+	h.Push(30, nil)
+	h.Push(40, nil)
+	h.Push(50, nil)
+	h.Push(60, nil)
+	//h.Push(1, nil)
+	//h.Push(3, nil)
+	h.Print()
+	h.Pop()
+	h.Print()
 }
 
 func Do(value int) {

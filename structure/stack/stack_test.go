@@ -4,19 +4,19 @@ import (
 	"errors"
 	"fmt"
 	"github.com/stretchr/testify/assert"
-	ll "github.com/wubba-com/algorithms_and_structures/structure/linked_list"
 	"testing"
 )
 
 func TestStack_ArrayPeek(t *testing.T) {
-	s := New()
-	v, ok := s.ArrayPeek()
-	assert.Equal(t, uint32(0), v)
+	var empty *Value
+	s := NewBasicArray()
+	v, ok := s.Peek()
+	assert.Equal(t, empty, v)
 	assert.Equal(t, false, ok)
 }
 
 func TestStack_ArrayPop(t *testing.T) {
-	s := New()
+	s := NewBasicArray()
 	tests := []int32{
 		1,
 		2,
@@ -25,78 +25,69 @@ func TestStack_ArrayPop(t *testing.T) {
 
 	for _, v := range tests {
 		t.Run(fmt.Sprintf("test-%d", v), func(t *testing.T) {
-			s.ArrayPush(v)
-			val, ok := s.ArrayPop()
-			if ok == false {
-				assert.Error(t, errors.New("ok should not be equal false"))
+			s.Push(Value{Value: v})
+			val, err := s.Pop()
+			if err != nil {
+				assert.Error(t, errors.New("err should not be equal error"))
 			}
-			assert.Equal(t, v, val)
+			assert.Equal(t, v, val.Value.(int32))
 		})
 	}
-
-	v, ok := s.ArrayPop()
-	assert.Equal(t, false, ok)
-	assert.Equal(t, int32(0), v)
+	var empty *Value
+	v, err := s.Pop()
+	assert.ErrorIs(t, ErrEmptyStack, err)
+	assert.Equal(t, empty, v)
 }
 
 func TestStack_LLPeek(t *testing.T) {
-	var empty *ll.Node
-	s := New()
+	var empty *Value
+	s := NewBasicLinkedList()
+	v, ok := s.Peek()
+	assert.Equal(t, false, ok)
+	assert.Equal(t, empty, v)
 
-	assert.Equal(t, empty, s.LLPeek())
 }
 
 func TestStack_LLPush(t *testing.T) {
-	s := New()
+	s := NewBasicLinkedList()
 
-	s.LLPush(1)
-	assert.Equal(t, int32(1), s.LLPeek().Value())
+	s.Push(Value{Value: int32(1)})
+	v, ok := s.Peek()
+	assert.Equal(t, true, ok)
+	assert.Equal(t, int32(1), v.Value.(int32))
 
-	s.LLPush(2)
-	assert.Equal(t, int32(2), s.LLPeek().Value())
+	s.Push(Value{Value: int32(2)})
+	v, ok = s.Peek()
+	assert.Equal(t, true, ok)
+	assert.Equal(t, int32(2), v.Value.(int32))
 
-	s.LLPush(3)
-	assert.Equal(t, int32(3), s.LLPeek().Value())
+	s.Push(Value{Value: int32(3)})
+	v, ok = s.Peek()
+	assert.Equal(t, true, ok)
+	assert.Equal(t, int32(3), v.Value.(int32))
 }
 
 func TestStack_LLPop(t *testing.T) {
-	var empty *ll.Node
-	s := New()
+	var (
+		empty *Value
+		tests = []int32{
+			1, 2, 3,
+		}
+	)
+	s := NewBasicLinkedList()
+	for i := range tests {
+		s.Push(Value{Value: tests[i]})
+		n, err := s.Pop()
+		if err != nil {
+			assert.Error(t, errors.New("ошибка должна быть равна nil"))
+		}
+		assert.Equal(t, tests[i], n.Value.(int32))
+	}
 
-	// -------------- test 1 ---------------------
-	if ok := s.LLPush(1); !ok {
-		assert.Error(t, errors.New("not added - 1"))
-	}
-	n, err := s.LLPop()
-	if err != nil {
-		assert.Error(t, errors.New("ошибка должна быть равна nil"))
-	}
-	assert.Equal(t, int32(1), n.Value())
-
-	// -------------- test 2 ---------------------
-	if ok := s.LLPush(2); !ok {
-		assert.Error(t, errors.New("not added - 2"))
-	}
-	n, err = s.LLPop()
-	if err != nil {
-		assert.Error(t, errors.New("ошибка должна быть равна nil"))
-	}
-	assert.Equal(t, int32(2), n.Value())
-
-	// -------------- test 3 ---------------------
-	if ok := s.LLPush(3); !ok {
-		assert.Error(t, errors.New("not added - 3"))
-	}
-	n, err = s.LLPop()
-	if err != nil {
-		assert.Error(t, errors.New("ошибка должна быть равна nil"))
-	}
-	assert.Equal(t, int32(3), n.Value())
-
-	// -------------- test 4 ---------------------
-	n, err = s.LLPop()
+	n, err := s.Pop()
 	if err == nil {
 		assert.Error(t, errors.New("ошибка не должна быть равна nil"))
 	}
+	assert.ErrorIs(t, ErrEmptyStack, err)
 	assert.Equal(t, empty, n)
 }

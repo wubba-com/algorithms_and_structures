@@ -32,24 +32,24 @@ func (q *Queue) Len() int {
 	return q.len
 }
 
-// PeekShift
+// PeekFront
 // Поведение: Возвращает первый элемент.
 // Сложность: O(n)
-func (q *Queue) PeekShift() *dll.Node {
+func (q *Queue) PeekFront() *dll.Node {
 	return q.list.Find(0)
 }
 
-// PeekPop
+// PeekBack
 // Поведение: Возвращает последний элемент.
 // Сложность: O(n)
-func (q *Queue) PeekPop() *dll.Node {
+func (q *Queue) PeekBack() *dll.Node {
 	return q.list.Find(-1)
 }
 
-// Unshift
+// PushFront
 // Поведение: Добавляет элемент в начало очереди.
 // Сложность: O(1)
-func (q *Queue) Unshift(item interface{}) {
+func (q *Queue) PushFront(item interface{}) {
 	defer func() {
 		q.len += 1
 	}()
@@ -57,10 +57,10 @@ func (q *Queue) Unshift(item interface{}) {
 	q.list.AddFirst(item)
 }
 
-// Push
+// PushBack
 // Поведение: Добавляет элемент в конец очереди.
 // Сложность: O(1)
-func (q *Queue) Push(item interface{}) {
+func (q *Queue) PushBack(item interface{}) {
 	defer func() {
 		q.len += 1
 	}()
@@ -68,10 +68,10 @@ func (q *Queue) Push(item interface{}) {
 	q.list.AddLast(item)
 }
 
-// Shift
+// PopFront
 // Поведение: Удаляет первый элемент из очереди и возвращает его. Если очередь пустая, кидает ошибку.
 // Сложность: O(1).
-func (q *Queue) Shift() (*dll.Node, error) {
+func (q *Queue) PopFront() (*dll.Node, error) {
 	if first := q.list.PopFirst(); first != nil {
 		defer func() {
 			q.len -= 1
@@ -81,10 +81,10 @@ func (q *Queue) Shift() (*dll.Node, error) {
 	return nil, EmptyList
 }
 
-// Pop
+// PopBack
 // Поведение: Удаляет первый помещенный элемент из очереди и возвращает его. Если очередь пустая, кидает ошибку.
 // Сложность: O(1).
-func (q *Queue) Pop() (*dll.Node, error) {
+func (q *Queue) PopBack() (*dll.Node, error) {
 	if last := q.list.PopLast(); last != nil {
 		defer func() {
 			q.len -= 1

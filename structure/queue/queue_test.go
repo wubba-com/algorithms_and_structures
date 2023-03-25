@@ -19,15 +19,15 @@ func TestQueue_Unshift(t *testing.T) {
 
 	for _, val := range tests {
 		t.Run(fmt.Sprintf("%d", val), func(t *testing.T) {
-			q.Unshift(val)
-			node := q.PeekShift()
+			q.PushFront(val)
+			node := q.PeekFront()
 
 			assert.Equal(t, val, node.Value())
 		})
 	}
 }
 
-func TestQueue_ShiftAndUnshift(t *testing.T) {
+func TestQueue_PushBackAndPopFront(t *testing.T) {
 	q := New()
 
 	var tests = []int{
@@ -38,8 +38,8 @@ func TestQueue_ShiftAndUnshift(t *testing.T) {
 
 	for _, val := range tests {
 		t.Run(fmt.Sprintf("%d", val), func(t *testing.T) {
-			q.Push(val)
-			node, err := q.Shift()
+			q.PushBack(val)
+			node, err := q.PopFront()
 			if err != nil {
 				return
 			}
@@ -49,7 +49,7 @@ func TestQueue_ShiftAndUnshift(t *testing.T) {
 	}
 }
 
-func TestQueue_Push(t *testing.T) {
+func TestQueue_PushBack(t *testing.T) {
 	q := New()
 
 	var tests = []int{
@@ -60,15 +60,15 @@ func TestQueue_Push(t *testing.T) {
 
 	for _, val := range tests {
 		t.Run(fmt.Sprintf("%d", val), func(t *testing.T) {
-			q.Push(val)
-			node := q.PeekPop()
+			q.PushBack(val)
+			node := q.PeekBack()
 
 			assert.Equal(t, val, node.Value())
 		})
 	}
 }
 
-func TestQueue_PopAndPush(t *testing.T) {
+func TestQueue_PopBackAndPushBack(t *testing.T) {
 	q := New()
 
 	var tests = []int{
@@ -79,8 +79,8 @@ func TestQueue_PopAndPush(t *testing.T) {
 
 	for _, val := range tests {
 		t.Run(fmt.Sprintf("%d", val), func(t *testing.T) {
-			q.Push(val)
-			node, err := q.Pop()
+			q.PushBack(val)
+			node, err := q.PopBack()
 			if err != nil {
 				t.Error(err)
 			}
@@ -90,7 +90,7 @@ func TestQueue_PopAndPush(t *testing.T) {
 	}
 
 	var empty *dll.Node
-	node, err := q.Pop()
+	node, err := q.PopBack()
 	if err == nil {
 		assert.Error(t, errors.New("error should not be equal nil"))
 	}
@@ -98,23 +98,23 @@ func TestQueue_PopAndPush(t *testing.T) {
 	// проверка, что список пуст
 	assert.Equal(t, err, EmptyList)
 	assert.Equal(t, node, empty)
-	assert.Equal(t, q.PeekShift(), empty)
-	assert.Equal(t, q.PeekPop(), empty)
+	assert.Equal(t, q.PeekFront(), empty)
+	assert.Equal(t, q.PeekBack(), empty)
 
 	var (
 		expectedValue = 4
 	)
 
-	q.Push(expectedValue)
+	q.PushBack(expectedValue)
 
 	var actNode *dll.Node
-	actNode, err = q.Pop()
+	actNode, err = q.PopBack()
 	if err != nil {
 		assert.Error(t, errors.New("error should be equal nil"))
 	}
 	assert.Equal(t, expectedValue, actNode.Value())
 
-	node, err = q.Pop()
+	node, err = q.PopBack()
 	if err != nil {
 		assert.Equal(t, err, EmptyList)
 	} else {

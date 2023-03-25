@@ -59,9 +59,9 @@ func (g *Graph) AddEdge(idNode1, idNode2, weight int) error {
 
 func (g *Graph) BreadthSearch(a, b int) bool {
 	q := queue.New()
-	q.Push(a)
+	q.PushBack(a)
 	for q.Len() > 0 {
-		current, err := q.Shift()
+		current, err := q.PopFront()
 		if err != nil {
 			return false
 		}
@@ -74,7 +74,7 @@ func (g *Graph) BreadthSearch(a, b int) bool {
 			return true
 		} else {
 			for id, _ := range g.nodes[idNode].edges {
-				q.Push(id)
+				q.PushBack(id)
 			}
 		}
 	}

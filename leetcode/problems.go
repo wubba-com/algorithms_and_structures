@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -312,10 +313,6 @@ func printList(ll *ListNode) {
 }
 
 // ListNode Definition for singly-linked list.
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
 
 // ---------- end mergeTwoLists ----------
 
@@ -561,4 +558,93 @@ func Download(sizes ...int) <-chan int {
 		close(c)
 	}()
 	return c
+}
+
+func deleteDuplicates(head *ListNode) *ListNode {
+	current := head
+	n := &ListNode{}
+	next := n
+	for current != nil {
+		if !In(current.Val, n.Next) {
+			next.Next = &ListNode{Val: current.Val}
+			next = next.Next
+		}
+		current = current.Next
+	}
+
+	return n.Next
+}
+
+func In(val int, other *ListNode) bool {
+	for other != nil {
+		if other.Val == val {
+			return true
+		}
+		other = other.Next
+	}
+
+	return false
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+	if p == nil && q == nil {
+		return true
+	} else {
+		if (p == nil && q != nil) || (q == nil && p != nil) {
+			return false
+		}
+		if p.Val == q.Val {
+			isLeft := isSameTree(p.Left, q.Left)
+			isRight := isSameTree(p.Right, q.Right)
+
+			if isLeft && isRight {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func inorderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	nums := make([]int, 0)
+	nums = append(nums, inorderTraversal(root.Left)...)
+	nums = append(nums, root.Val)
+	nums = append(nums, inorderTraversal(root.Right)...)
+
+	return nums
+}
+
+func isSymmetrics(x, y *TreeNode) bool {
+	if x == nil && y == nil {
+		return true
+	}
+
+	return (x != nil && y != nil) && isSymmetrics(x.Left, y.Right) && isSymmetrics(x.Right, y.Left)
+}
+func isSymmetric(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+
+	return isSymmetrics(root.Left, root.Right)
+}
+
+func maxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	leftDepth := maxDepth(root.Left)
+	rightDepth := maxDepth(root.Right)
+
+	return int(float64(1) + math.Max(float64(leftDepth), float64(rightDepth)))
 }

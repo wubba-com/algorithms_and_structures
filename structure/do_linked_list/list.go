@@ -157,9 +157,10 @@ func (l *LinkedList) Print() {
 	n := l.first
 
 	for n != nil {
-		fmt.Println(n.val)
+		fmt.Printf("%v ", n.val)
 		n = n.next
 	}
+	fmt.Println()
 }
 
 // PrintList идет снизу на вверх и печатает сверху вниз O(2*N)
