@@ -10,10 +10,13 @@ binary search, quick sort, sort insert .
 
 Пример структуры данных stack:
 ```go
+
 	s := stack.NewBasicLinkedList()
+
     for i := 1; i < 10; i++ {
 		s.Push(stack.Value{Value: i})
 	}
+	
 	// пока список не пустой
 	for s.Next() {
 		var v *stack.Value
@@ -50,7 +53,7 @@ binary search, quick sort, sort insert .
 		return 
 	}
 	fmt.Printf("%v", el.Value()) // 4
-	
+
 	queue.Print(q) // 3 2 1 10 20 30
  ```
 P.S Проект будет дополнятся и более сложными структурами и алгоритмами
