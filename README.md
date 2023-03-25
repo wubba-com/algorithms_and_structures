@@ -13,7 +13,7 @@ binary search, quick sort, sort insert .
 
 	s := stack.NewBasicLinkedList()
 
-    for i := 1; i < 10; i++ {
+    	for i := 1; i < 10; i++ {
 		s.Push(stack.Value{Value: i})
 	}
 	
